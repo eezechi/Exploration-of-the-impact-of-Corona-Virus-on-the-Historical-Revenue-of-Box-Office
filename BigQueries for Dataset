@@ -1,0 +1,30 @@
+
+*** Data scrapping
+
+IMPORTHTML(“url”,”table”,n)
+
+
+*** Corona Virus Total Cases and Deaths in Domestic Region (USA, Canada, Puerto Rico)
+
+SELECT location, date, population, total_deaths, total_cases, (total_deaths/population)*100 as DeathPercentage
+FROM health-project.covid19_file.covid_death
+WHERE location IN (‘United States’, ‘Canada’, ‘Puerto Rico’)
+ORDER By 1,2
+
+
+*** Global Numbers
+
+SELECT SUM(new_cases) as total_cases, SUM(new_deaths) as total_deaths, SUM(new_deaths)/SUM(new_cases)*100 as DeathPercentage
+From `health-project-376402.Covid19_file.Covid death`
+WHERE continent is not null
+ORDER By 1,2 DESC
+
+
+*** Top 5 Countries with maximum Corona Virus Cases and Deaths
+
+SELECT location, MAX(total_cases) AS TotalCaseCount, MAX(total_deaths) AS TotalDeathCount
+FROM `health-project-376402.Covid19_file.Covid death`
+WHERE continent is NULL
+GROUP by location
+ORDER BY 2 DESC
+LIMIT 5
